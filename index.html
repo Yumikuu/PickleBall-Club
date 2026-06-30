@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Book your pickleball court appointment easily. Schedule games, find open courts, and join the pickleball community.">
+  <meta name="keywords" content="pickleball, appointment, court booking, schedule, sports">
+  <meta name="author" content="Pickleball Appointments">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="Pickleball Appointments - Book Your Court">
+  <meta property="og:description" content="Schedule your pickleball game quickly and easily. Find open courts and reserve your spot.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/og-cover.webp">
+
+  <title>Pickleball Appointments - Book Your Court</title>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --blue: #a8d8ea;
+      --blue-dark: #6fb3d1;
+      --green: #b8e6c8;
+      --green-dark: #7cc99a;
+      --pink: #f4c2c2;
+      --pink-dark: #e89a9a;
+      --white: #ffffff;
+      --off-white: #f9fcfd;
+      --text-dark: #2c3e50;
+      --text-light: #5a6c7d;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-dark);
+      background-color: var(--off-white);
+      line-height: 1.6;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ===== HEADER / NAV (Z-pattern: top row) ===== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 40px;
+      background-color: var(--white);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      max-width: 1280px;
+      margin: 0 auto;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    header.header-hidden {
+      transform: translateY(-100%);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo img {
+      border-radius: 50%;
+      border: none;
+    }
+
+    .logo h1 {
+      font-size: 1.3rem;
+      color: var(--pink-dark);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .logo h1 span {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--green-dark);
+      font-weight: 600;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+      align-items: center;
+    }
+
+    nav ul li a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: var(--green-dark);
+    }
+
+    .btn-appointment {
+      display: inline-block;
+      padding: 10px 22px;
+      background-color: var(--pink);
+      color: var(--text-dark);
+      font-weight: 600;
+      border-radius: 25px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .btn-appointment:hover {
+      background-color: var(--pink-dark);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      position: relative;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background-color: #faf6f0;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 25px;
+      background-color: var(--green);
+      opacity: 0.45;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-wave-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 180px;
+    }
+
+    .hero-wave-bottom {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 180px;
+      height: 180px;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+      height: 100%;
+      min-height: 550px;
+    }
+
+    .hero-image {
+      flex: 1;
+      position: relative;
+      clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 80px 60px 40px 40px;
+    }
+
+    .hero-content h2 {
+      font-size: 3.2rem;
+      margin-bottom: 12px;
+      color: var(--text-dark);
+      line-height: 1.2;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .hero-content h2 span {
+      color: var(--pink-dark);
+      text-shadow: 2px 2px 8px rgba(232,154,154,0.3);
+    }
+
+    .hero-content .hero-tagline {
+      display: inline-block;
+      font-size: 1rem;
+      color: var(--white);
+      font-weight: 600;
+      margin-bottom: 18px;
+      background-color: var(--green-dark);
+      padding: 8px 18px;
+      border-radius: 20px;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 32px;
+      max-width: 420px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+    }
+
+    .hero-buttons .btn-hero {
+      display: inline-block;
+      padding: 13px 28px;
+      background-color: var(--pink);
+      color: var(--text-dark);
+      font-weight: 600;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .hero-buttons .btn-hero:hover {
+      background-color: var(--pink-dark);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .hero-buttons .btn-secondary {
+      display: inline-block;
+      padding: 13px 28px;
+      background-color: transparent;
+      color: var(--text-dark);
+      font-weight: 600;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      border: 2px solid var(--green-dark);
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .hero-buttons .btn-secondary:hover {
+      background-color: var(--green);
+      transform: translateY(-2px);
+    }
+
+    .hero-image {
+      flex: 1;
+      position: relative;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: -8px 8px 30px rgba(0,0,0,0.12);
+    }
+
+
+    /* ===== WAVE DIVIDER ===== */
+    .wave-divider {
+      margin-top: -2px;
+      background-color: #faf6f0;
+      line-height: 0;
+    }
+
+    .wave-divider svg {
+      width: 100%;
+      height: 30px;
+      display: block;
+    }
+
+    /* ===== ABOUT SECTION ===== */
+    .about {
+      padding: 60px 40px;
+      background-color: var(--white);
+    }
+
+    .about h2 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 16px;
+      color: var(--text-dark);
+    }
+
+    .about p {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 1.05rem;
+      color: var(--text-light);
+    }
+
+    /* ===== SERVICES / FEATURES (Z-pattern: middle content) ===== */
+    .features {
+      padding: 60px 40px;
+      background-color: #faf6f0;
+    }
+
+    .features h2 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 12px;
+      color: var(--text-dark);
+    }
+
+    .features-subtitle {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 40px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .feature-card {
+      background-color: var(--white);
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-top: 4px solid var(--pink-dark);
+    }
+
+    .feature-card img {
+      margin: 0 auto 20px;
+      border-radius: 8px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--text-dark);
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .how-it-works {
+      padding: 60px 40px;
+      background-color: var(--green);
+    }
+
+    .how-it-works h2 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--text-dark);
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      position: relative;
+      padding: 0 60px;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 25px;
+      left: 15%;
+      right: 15%;
+      height: 3px;
+      background-color: var(--green-dark);
+      z-index: 0;
+    }
+
+    .step {
+      flex: 1;
+      text-align: center;
+      padding: 60px 20px 30px;
+      background-color: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      position: relative;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .step-number {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background-color: var(--green-dark);
+      color: var(--white);
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 50%;
+      z-index: 1;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .step-icon {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 16px;
+      display: block;
+    }
+
+    .step h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+    }
+
+    .step p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
+    /* ===== GALLERY / COURTS ===== */
+    .gallery {
+      padding: 60px 40px;
+      background-color: #faf6f0;
+    }
+
+    .gallery h2 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 12px;
+      color: var(--text-dark);
+    }
+
+    .gallery-subtitle {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 40px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.03);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-item .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px;
+      background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+      color: var(--white);
+      font-weight: 600;
+      font-size: 0.95rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover .overlay {
+      opacity: 1;
+    }
+
+    /* ===== CTA SECTION (Z-pattern: bottom row) ===== */
+    .cta {
+      padding: 60px 40px;
+      background-color: #faf6f0;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      color: var(--text-dark);
+    }
+
+    .cta p {
+      font-size: 1.05rem;
+      color: var(--text-light);
+      margin-bottom: 24px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta .btn-cta {
+      display: inline-block;
+      padding: 14px 36px;
+      background-color: var(--white);
+      color: var(--text-dark);
+      font-weight: 600;
+      border-radius: 25px;
+      font-size: 1.05rem;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .cta .btn-cta:hover {
+      background-color: var(--green);
+      transform: translateY(-2px);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 30px 40px;
+      background-color: var(--text-dark);
+      color: var(--white);
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    footer nav ul {
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    footer nav ul li a {
+      color: var(--white);
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+
+    footer nav ul li a:hover {
+      opacity: 1;
+    }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .animate-delay-1 { transition-delay: 0.1s; }
+    .animate-delay-2 { transition-delay: 0.2s; }
+    .animate-delay-3 { transition-delay: 0.3s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-image {
+        text-align: center;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .steps {
+        flex-direction: column;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      header {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero-content h2 {
+        font-size: 1.8rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="logo">
+      <!-- Logo: 60x60px webp -->
+      <img src="images/logo.webp" alt="Pickleball Appointments Logo" width="60" height="60">
+      <h1>Pickleball <span>Club</span></h1>
+    </div>
+
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#gallery">Courts</a></li>
+        <!-- Google Form link - replace # with your actual Google Form URL -->
+        <li><a href="appointment.html" class="btn-appointment" aria-label="Set an appointment via Google Form">Set Appointment</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main style="padding-top: 84px;">
+
+    <!-- HERO SECTION -->
+    <section class="hero" aria-label="Hero banner">
+      <!-- Decorative corner waves -->
+      <svg class="hero-wave-top" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M0,0 C50,40 80,80 0,200 L0,0 Z" fill="#b8e6c8" opacity="0.4"/>
+        <path d="M0,0 C80,20 60,60 0,150 L0,0 Z" fill="#f4c2c2" opacity="0.35"/>
+      </svg>
+      <svg class="hero-wave-bottom" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M200,200 C150,160 120,120 200,0 L200,200 Z" fill="#b8e6c8" opacity="0.4"/>
+        <path d="M200,200 C120,180 140,140 200,50 L200,200 Z" fill="#f4c2c2" opacity="0.35"/>
+      </svg>
+      <div class="hero-inner">
+        <div class="hero-content">
+          <p class="hero-tagline">Welcome to Pickleball Club</p>
+          <h2>Your Game.<br><span>Your Court.</span><br>Your Time.</h2>
+          <p>Skip the hassle. Book a court in seconds and get playing — whether you're here for fun or competition.</p>
+          <div class="hero-buttons">
+            <a href="appointment.html" class="btn-hero" aria-label="Set an appointment">Set Appointment</a>
+            <a href="#features" class="btn-secondary">Learn More</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <!-- Hero image: 640x580px webp -->
+          <img src="images/hero-pickleball.webp" alt="Pickleball player in action on the court" width="640" height="580">
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about" aria-label="About us">
+      <h2 class="animate-on-scroll">About <span style="color: var(--pink-dark);">Pickleball</span> <span style="color: var(--green-dark);">Club</span></h2>
+      <p class="animate-on-scroll animate-delay-1">We're passionate about making pickleball accessible to everyone. Our community connects players with available courts, helping you spend less time planning and more time playing. Whether you're a beginner or a pro, there's always a spot for you here.</p>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features" id="features" aria-label="Our features">
+      <h2>Why Choose Us</h2>
+      <p class="features-subtitle">Everything you need for a great pickleball experience</p>
+      <div class="features-grid">
+
+        <article class="feature-card animate-on-scroll animate-delay-1">
+          <!-- Feature icon: 300x300px webp -->
+          <img src="images/icon-schedule.webp" alt="Calendar icon representing easy scheduling" width="300" height="300">
+          <h3>Easy Scheduling</h3>
+          <p>Pick your date and time with just a few clicks. No complicated forms or phone calls needed.</p>
+        </article>
+
+        <article class="feature-card animate-on-scroll animate-delay-2">
+          <!-- Feature icon: 300x300px webp -->
+          <img src="images/icon-courts.webp" alt="Court icon representing multiple court options" width="300" height="300">
+          <h3>Multiple Courts</h3>
+          <p>Choose from several courts available in your area. Indoor and outdoor options for all weather conditions.</p>
+        </article>
+
+        <article class="feature-card animate-on-scroll animate-delay-3">
+          <!-- Feature icon: 300x300px webp -->
+          <img src="images/icon-community.webp" alt="People icon representing community" width="300" height="300">
+          <h3>Community Driven</h3>
+          <p>Connect with fellow players, find partners, and join local pickleball events in your neighborhood.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION -->
+    <section class="how-it-works" id="how-it-works" aria-label="How it works">
+      <h2>How It Works</h2>
+      <div class="steps">
+
+        <div class="step animate-on-scroll animate-delay-1">
+          <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="var(--green-dark)" stroke-width="2" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span class="step-number" aria-hidden="true">1</span>
+          <h3>Choose a Court</h3>
+          <p>Browse available courts and pick the one that suits your location and preference.</p>
+        </div>
+
+        <div class="step animate-on-scroll animate-delay-2">
+          <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="var(--green-dark)" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <span class="step-number" aria-hidden="true">2</span>
+          <h3>Pick Your Schedule</h3>
+          <p>Select a date and time that works for you. See real-time availability at a glance.</p>
+        </div>
+
+        <div class="step animate-on-scroll animate-delay-3">
+          <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="var(--green-dark)" stroke-width="2" aria-hidden="true">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <span class="step-number" aria-hidden="true">3</span>
+          <h3>Confirm &amp; Play</h3>
+          <p>Submit your appointment and get a confirmation. Show up and enjoy your game!</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section class="gallery" id="gallery" aria-label="Court gallery">
+      <h2>Our Courts</h2>
+      <p class="gallery-subtitle">Explore our top-quality courts available for your next game</p>
+      <div class="gallery-grid">
+        <div class="gallery-item animate-on-scroll animate-delay-1">
+          <!-- Gallery image: 384x240px webp -->
+          <img src="images/court-1.webp" alt="Outdoor pickleball court with blue surface and white lines" width="384" height="240">
+          <div class="overlay">Outdoor Court</div>
+        </div>
+        <div class="gallery-item animate-on-scroll animate-delay-2">
+          <!-- Gallery image: 384x240px webp -->
+          <img src="images/court-2.webp" alt="Indoor pickleball court with professional lighting" width="384" height="240">
+          <div class="overlay">Indoor Court</div>
+        </div>
+        <div class="gallery-item animate-on-scroll animate-delay-3">
+          <!-- Gallery image: 384x240px webp -->
+          <img src="images/court-3.webp" alt="Community pickleball courts surrounded by green trees" width="384" height="240">
+          <div class="overlay">Community Court</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta" aria-label="Call to action">
+      <h2>Ready to Play?</h2>
+      <p>Don't wait—reserve your spot today and get on the court. It only takes a minute to set your appointment.</p>
+      <!-- Google Form link - replace # with your actual Google Form URL -->
+      <a href="appointment.html" class="btn-cta" aria-label="Set your pickleball appointment">Set Appointment</a>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <nav aria-label="Footer navigation">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#gallery">Courts</a></li>
+      </ul>
+    </nav>
+    <p>&copy; 2026 PicklePlay. All rights reserved.</p>
+  </footer>
+
+  <script>
+    (function() {
+      // Header hide/show on scroll
+      var header = document.querySelector('header');
+      var lastScroll = 0;
+
+      window.addEventListener('scroll', function() {
+        var currentScroll = window.pageYOffset;
+
+        if (currentScroll > lastScroll && currentScroll > 80) {
+          header.classList.add('header-hidden');
+        } else {
+          header.classList.remove('header-hidden');
+        }
+
+        lastScroll = currentScroll;
+      });
+
+      // Scroll animations
+      var animateElements = document.querySelectorAll('.animate-on-scroll');
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      animateElements.forEach(function(el) {
+        observer.observe(el);
+      });
+    })();
+  </script>
+</body>
+</html>
