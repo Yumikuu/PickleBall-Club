@@ -340,6 +340,9 @@
       text-align: center;
       margin-bottom: 12px;
       color: var(--text-dark);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 800;
     }
 
     .features-subtitle {
@@ -396,6 +399,9 @@
       text-align: center;
       margin-bottom: 40px;
       color: var(--text-dark);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 800;
     }
 
     .steps {
@@ -479,6 +485,9 @@
       text-align: center;
       margin-bottom: 12px;
       color: var(--text-dark);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 800;
     }
 
     .gallery-subtitle {
@@ -542,6 +551,9 @@
       font-size: 2rem;
       margin-bottom: 16px;
       color: var(--text-dark);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 800;
     }
 
     .cta p {
@@ -648,13 +660,28 @@
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
-      .hero {
+      .hero-inner {
         flex-direction: column;
+      }
+
+      .hero-content {
+        padding: 40px 40px 20px;
         text-align: center;
+        align-items: center;
       }
 
       .hero-image {
-        text-align: center;
+        clip-path: none;
+        margin-top: 0;
+      }
+
+      .hero-image img {
+        height: 350px;
+        border-radius: 0;
+      }
+
+      .hero-buttons {
+        justify-content: center;
       }
 
       .features-grid {
@@ -700,6 +727,14 @@
         font-size: 1.8rem;
       }
 
+      .hero-inner {
+        min-height: auto;
+      }
+
+      .hero-image img {
+        height: 280px;
+      }
+
       .features-grid {
         grid-template-columns: 1fr;
       }
@@ -715,7 +750,7 @@
   <!-- ===== HEADER ===== -->
   <header>
     <div class="logo">
-      <!-- Logo: 60x60px webp -->
+      <!-- Logo: 90x90px webp -->
       <img src="images/logo.webp" alt="Pickleball Appointments Logo" width="60" height="60">
       <h1>Pickleball <span>Club</span></h1>
     </div>
