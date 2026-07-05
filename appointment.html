@@ -45,6 +45,9 @@
       padding: 12px 40px;
       background-color: var(--white);
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     .logo {
@@ -68,11 +71,29 @@
     .logo h1 span {
       display: block;
       font-size: 0.85rem;
-      color: var(--green-dark);
+      color: #1a7a4a;
       font-weight: 600;
     }
 
-    .btn-back {
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+      align-items: center;
+    }
+
+    nav ul li a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: var(--green-dark);
+    }
+
+    .btn-appointment {
       display: inline-block;
       padding: 10px 22px;
       background-color: var(--pink);
@@ -82,7 +103,7 @@
       transition: background-color 0.3s, transform 0.2s;
     }
 
-    .btn-back:hover {
+    .btn-appointment:hover {
       background-color: var(--pink-dark);
       color: var(--white);
       transform: translateY(-2px);
@@ -138,11 +159,19 @@
 <body>
 
   <header>
-    <a href="index.html" class="logo">
-      <img src="images/logo.webp" alt="Pickleball Club Logo" width="60" height="60">
+    <div class="logo">
+      <img src="images/logo.webp" alt="Pickleball Appointments Logo" width="60" height="60">
       <h1>Pickleball <span>Club</span></h1>
-    </a>
-    <a href="index.html" class="btn-back">Back to Home</a>
+    </div>
+
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="index.html#gallery">Courts</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main class="form-section">
